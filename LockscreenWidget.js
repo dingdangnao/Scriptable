@@ -12,7 +12,7 @@ const calendar = calendarFunc();
 const fmLocal = FileManager.local();
 const _config = {
   apiKey: "", // 彩云天气 key https://caiyunapp.com/api/weather#api
-  emojiUrl:"https://github.com/dingdangnao/Scriptable/AMEmoji/", //年份emoji的链接地址，要以 8/ 结尾
+  emojiUrl:"https://raw.githubusercontent.com/dingdangnao/Scriptable/main/AMEmoji/", //年份emoji的链接地址，要以 / 结尾
   refreshInterval: 10, // 刷新时间--估算(单位：分钟)
   imgRefreshInterval: 120, // 刷新时间--估算(单位：分钟)
   // 位置，可以不进行定位，或者定位为出错的时候使用
@@ -1093,7 +1093,7 @@ function animalEmoji(animalStr) {
       break;
   }
   return (
-    _config.emojiUrl + emoji + "_W.png?raw=true"
+    _config.emojiUrl + emoji + "_W.png"
   );
 
 }
