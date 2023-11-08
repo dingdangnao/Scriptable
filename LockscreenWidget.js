@@ -84,7 +84,7 @@ Script.complete();
 
 async function renderLockscreenWidget() {
   let widget = new ListWidget();
-  widget.refreshAfterDate = new Date(Date.now() + 60 * 5 * 1000);  // 设置刷新时间为30秒后
+  //   widget.refreshAfterDate = new Date(Date.now() + 60 * 5 * 1000);  // 设置刷新时间为30秒后
   widget.useDefaultPadding();
   let weatherInfo = await getWeather();
   console.log('weatherInfo', weatherInfo)
@@ -104,7 +104,12 @@ async function renderLockscreenWidget() {
   // 农历
   const lunarCalendarStack = widget.addStack();
   lunarCalendarStack.centerAlignContent();
+
   let lunarInfoData = `${dateInfo.gzYear}年 ${dateInfo.IMonthCn}${dateInfo.IDayCn}`;
+
+  if (dateInfo.Term) {
+    lunarInfoData += ` ${dateInfo.Term}`;
+  }
 
   if (dateInfo.lunarFestival && !dateInfo.festival) {
     lunarInfoData = `${dateInfo.gzYear}年 ${dateInfo.IMonthCn}${dateInfo.IDayCn} • ${dateInfo.lunarFestival}`;
@@ -124,23 +129,19 @@ async function renderLockscreenWidget() {
     lunarInfoData = `${dateInfo.IMonthCn}${dateInfo.IDayCn} • ${dateInfo.lunarFestival} • ${dateInfo.festival}`;
   }
 
-
   if (!dateInfo.festival && !dateInfo.lunarFestival) {
     let yearAnimalImageContent = await getImageByUrl(
       animalEmoji(dateInfo.Animal)
     );
     yearAnimalImage = lunarCalendarStack.addImage(yearAnimalImageContent);
-    yearAnimalImage.imageSize = new Size(17, 17);
+    yearAnimalImage.imageSize = new Size(18, 18);
     yearAnimalImage.centerAlignImage();
     lunarCalendarStack.addSpacer(6)
-    // let yearAnimalText = lunarCalendarStack.addText(` ${dateInfo.Animal} ⫶ `);
-    // let yearAnimalText = lunarCalendarStack.addText(` `);
-    // yearAnimalText.font = Font.boldSystemFont(12);
   }
 
   let lunarInfoTextWidget = lunarCalendarStack.addText(lunarInfoData);
   lunarInfoTextWidget.font = Font.boldSystemFont(12);
-  if (lunarInfoData.length >= 10) {
+  if (lunarInfoData.length > 12) {
     lunarInfoTextWidget.font = Font.boldSystemFont(11);
   }
   lunarInfoTextWidget.lineLimit = 1;
@@ -195,7 +196,7 @@ async function renderLockscreenWidget() {
       }
       const tRangeIcon = getSFSymbol(thermometerIcon);
       let tRangeIconWidget = weatherStack.addImage(tRangeIcon);
-      tRangeIconWidget.imageSize = new Size(11, 11);
+      tRangeIconWidget.imageSize = new Size(12, 12);
       tRangeIconWidget.tintColor = new Color("ffffff", 0.8);
       weatherStack.addSpacer(2);
       let aqiTextWidget = weatherStack.addText(

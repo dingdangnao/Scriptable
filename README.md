@@ -15,3 +15,15 @@
 - 显示天气状况 图标、文字，当前温度，当日最低温度和最高温度
 - 显示当前空气质量、日出日落时间
 - 部分方法来自 [Enjoyee/Scriptable](https://github.com/Enjoyee/Scriptable)
+
+
+### 微博热搜小组件
+
+![屏幕截图](./src/8b8090c5-f26b-4c1d-bf2e-fc899dcf52a7.png)
+
+[Weibo Widget](./Weibo.js)
+
+- 适应系统主题
+- 小尺寸和中尺寸
+- 自定义显示条数
+- 点击跳转对应条目
