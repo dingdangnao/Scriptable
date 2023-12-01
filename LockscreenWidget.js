@@ -129,20 +129,23 @@ async function renderLockscreenWidget() {
     lunarInfoData = `${dateInfo.IMonthCn}${dateInfo.IDayCn} • ${dateInfo.lunarFestival} • ${dateInfo.festival}`;
   }
 
+  let yearAnimalImageContent = await getImageByUrl(
+    animalEmoji(dateInfo.Animal)
+  );
+  yearAnimalImage = lunarCalendarStack.addImage(yearAnimalImageContent);
+  yearAnimalImage.centerAlignImage();
   if (!dateInfo.festival && !dateInfo.lunarFestival) {
-    let yearAnimalImageContent = await getImageByUrl(
-      animalEmoji(dateInfo.Animal)
-    );
-    yearAnimalImage = lunarCalendarStack.addImage(yearAnimalImageContent);
-    yearAnimalImage.imageSize = new Size(18, 18);
-    yearAnimalImage.centerAlignImage();
+    yearAnimalImage.imageSize = new Size(16, 16);
     lunarCalendarStack.addSpacer(6)
+  } else {
+    yearAnimalImage.imageSize = new Size(0, 16);
+    yearAnimalImage.centerAlignImage();
   }
 
   let lunarInfoTextWidget = lunarCalendarStack.addText(lunarInfoData);
-  lunarInfoTextWidget.font = Font.boldSystemFont(12);
+  lunarInfoTextWidget.font = Font.boldSystemFont(11);
   if (lunarInfoData.length > 12) {
-    lunarInfoTextWidget.font = Font.boldSystemFont(11);
+    lunarInfoTextWidget.font = Font.boldSystemFont(10);
   }
   lunarInfoTextWidget.lineLimit = 1;
 
@@ -151,7 +154,7 @@ async function renderLockscreenWidget() {
   // 农历 END
   //////////////////////////
 
-  widget.addSpacer(7);
+  widget.addSpacer(6);
   //////////////////////////
   // 天气
   if (weatherInfo && weatherInfo.temperature) {
@@ -165,23 +168,23 @@ async function renderLockscreenWidget() {
       _config.weatherSFIcos[weatherInfo.weatherIco]
     );
     let weatherIconWidget = weatherStack.addImage(weatherIcon);
-    weatherIconWidget.imageSize = new Size(18, 18);
+    weatherIconWidget.imageSize = new Size(16, 16);
     weatherIconWidget.centerAlignImage();
 
     // 天气描述
     weatherStack.addSpacer(6);
     let weatherDescValue = _config.weatherDesc[weatherInfo.weatherIco];
     let weatherDescWidget = weatherStack.addText(`${weatherDescValue}`);
-    weatherDescWidget.font = Font.blackSystemFont(12);
+    weatherDescWidget.font = Font.blackSystemFont(11);
 
     // 天气温度
     weatherStack.addSpacer(6);
     let weatherTemperatureValue = weatherInfo.temperature;
-    weatherTemperatureValue = `${weatherTemperatureValue}℃`;
+    weatherTemperatureValue = `${weatherTemperatureValue}°`;
     let weatherTemperatureWidget = weatherStack.addText(
       `${weatherTemperatureValue}`
     );
-    weatherTemperatureWidget.font = Font.boldRoundedSystemFont(12);
+    weatherTemperatureWidget.font = Font.boldRoundedSystemFont(11);
 
     // 温度范围
     if (weatherDescValue.length < 3) {
@@ -199,17 +202,17 @@ async function renderLockscreenWidget() {
       tRangeIconWidget.imageSize = new Size(12, 12);
       tRangeIconWidget.tintColor = new Color("ffffff", 0.8);
       weatherStack.addSpacer(2);
-      let aqiTextWidget = weatherStack.addText(
-        `${weatherInfo.minTemperature}~${weatherInfo.maxTemperature}`
+      let tRangeWidget = weatherStack.addText(
+        `${weatherInfo.minTemperature}°~${weatherInfo.maxTemperature}°`
       );
-      aqiTextWidget.font = Font.semiboldRoundedSystemFont(10);
-      aqiTextWidget.textColor = new Color("ffffff", 0.8);
+      tRangeWidget.font = Font.boldRoundedSystemFont(9);
+      tRangeWidget.textColor = new Color("ffffff", 0.8);
     }
 
     // 天气 END
     //////////////////////////
     weatherStack.addSpacer();
-    widget.addSpacer(8);
+    widget.addSpacer(6);
 
     //////////////////////////
     // AQI 日出 日落
@@ -236,7 +239,7 @@ async function renderLockscreenWidget() {
 
     const aqiTextElement = otherWeatherStack.addText(`${weatherInfo.aqiValue}`);
     aqiTextElement.lineLimit = 1;
-    aqiTextElement.font = Font.boldRoundedSystemFont(10);
+    aqiTextElement.font = Font.boldRoundedSystemFont(9);
     aqiTextElement.textColor = new Color("ffffff", 0.8);
 
     // 日出ico
@@ -253,7 +256,7 @@ async function renderLockscreenWidget() {
 
     const sunriseTextElement = otherWeatherStack.addText(`${weatherInfo.sunrise}`);
     sunriseTextElement.lineLimit = 1;
-    sunriseTextElement.font = Font.boldRoundedSystemFont(10);
+    sunriseTextElement.font = Font.boldRoundedSystemFont(9);
     sunriseTextElement.textColor = new Color("ffffff", 0.8);
 
 
@@ -270,7 +273,7 @@ async function renderLockscreenWidget() {
 
     const sunsetTextElement = otherWeatherStack.addText(`${weatherInfo.sunset}`);
     sunsetTextElement.lineLimit = 1;
-    sunsetTextElement.font = Font.boldRoundedSystemFont(10);
+    sunsetTextElement.font = Font.boldRoundedSystemFont(9);
     sunsetTextElement.textColor = new Color("ffffff", 0.8);
 
     otherWeatherStack.addSpacer();
