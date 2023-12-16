@@ -87,17 +87,6 @@ async function renderLockscreenWidget() {
   //   widget.refreshAfterDate = new Date(Date.now() + 60 * 5 * 1000);  // 设置刷新时间为30秒后
   widget.useDefaultPadding();
   let weatherInfo = await getWeather();
-  console.log('weatherInfo', weatherInfo)
-  if (!weatherInfo) {
-    for (let retries = 0; retries < 5; retries++) {
-      weatherInfo = await getWeather(true);
-      if (weatherInfo && weatherInfo.temperature) {
-        break; // 如果成功获取到数据，立即跳出循环
-      } else {
-        console.log(weatherInfo)
-      }
-    }
-  }
   const dateInfo = calendar.solar2lunar();
 
   //////////////////////////
@@ -157,7 +146,7 @@ async function renderLockscreenWidget() {
   widget.addSpacer(6);
   //////////////////////////
   // 天气
-  if (weatherInfo && weatherInfo.temperature) {
+  if (weatherInfo && weatherInfo.temperature!=undefined) {
     const weatherStack = widget.addStack();
     // weatherStack.layoutHorizontally()
     weatherStack.centerAlignContent();
