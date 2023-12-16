@@ -88,7 +88,7 @@ async function renderLockscreenWidget() {
   widget.useDefaultPadding();
   let weatherInfo = await getWeather();
   console.log('weatherInfo', weatherInfo)
-  if (!weatherInfo || !weatherInfo.temperature) {
+  if (!weatherInfo) {
     for (let retries = 0; retries < 5; retries++) {
       weatherInfo = await getWeather(true);
       if (weatherInfo && weatherInfo.temperature) {
